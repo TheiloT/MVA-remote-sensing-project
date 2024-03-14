@@ -3,8 +3,8 @@ TILE_SHAPE = [224, 224]                 # desired tile shape
 IMG_BANDS_IDX = [0, 1, 2, 3, 4, 5]      # desired image band combination
 SLOPE = true                            # append slope band to image bands
 EXCLUDE_NODATA = true                   # exclude tiles with nodata values
-DATA_DIR = "/path/to/data_directory"    # data directory that holds the original images
-OUT_DIR = "/path/to/output_directory"   # output directory that stores the prepared train, val and test tiles
+DATA_DIR = "/kaggle/working/MVA-remote-sensing-project/s1s2_water/data"    # data directory that holds the original images
+OUT_DIR = "/kaggle/working/MVA-remote-sensing-project/s1s2_water/split_data"   # output directory that stores the prepared train, val and test tiles
 
 # Sentinel-1 image bands
 # {"VV": 0, "VH": 1}
