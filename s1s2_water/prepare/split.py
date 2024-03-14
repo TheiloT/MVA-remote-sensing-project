@@ -66,9 +66,12 @@ def run(data_dir, out_dir, sensor="s1", tile_shape=(256, 256), img_bands_idx=[0,
             if exclude_nodata:
                 if 0 in valid_tiles[j, :, :, :]:
                     continue
+            # Adapt to mmsegmentation naming conventions, with "img/msk" tag last.
+            image_path = Path(out_dir) / (f"{split}/img/{Path(img_file).stem}"[:-4] + f"_{j}_img.tif")
+            mask_Path = Path(out_dir) / (f"{split}/msk/{Path(msk_file).stem}"[:-4] + f"_{j}_msk.tif")
             tiff.imsave(
-                Path(out_dir) / f"{split}/img/{Path(img_file).stem}_{j}.tif",
+                image_path,
                 img_tiles[j, :, :, :],
                 planarconfig="contig",
             )
-            tiff.imsave(Path(out_dir) / f"{split}/msk/{Path(msk_file).stem}_{j}.tif", msk_tiles[j, :, :, :])
+            tiff.imsave(mask_Path, msk_tiles[j, :, :, :])

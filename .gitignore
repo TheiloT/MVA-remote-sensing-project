@@ -9,6 +9,6 @@
 s1s2_water/data/*
 s1s2_water/tiles/*
 !s1s2_water/data/catalog.json
-
+s1s2_water/split_data/*
 
 experiments/*

@@ -12,7 +12,7 @@ custom_imports = dict(imports=["geospatial_fm"])
 
 ### Configs
 # Data
-data_root = "./s1s2_water/data/"
+data_root = "./s1s2_water/split_data/"
 
 dataset_type = "GeospatialDataset"
 num_classes = 2
@@ -32,14 +32,14 @@ tile_size = img_size
 orig_nsize = 512
 crop_size = (tile_size, tile_size)
 
-train_img_dir = data_root + "train/img"
-train_ann_dir = data_root + "train/msk"
-val_img_dir = data_root + "val/img"
-val_ann_dir = data_root + "val/msk"
-test_img_dir = data_root + "test/img"
-test_ann_dir = data_root + "test/msk"
-img_suffix = ".tif"
-seg_map_suffix = ".tif"
+train_img_dir = "train/img"
+train_ann_dir = "train/msk"
+val_img_dir = "val/img"
+val_ann_dir = "val/msk"
+test_img_dir = "test/img"
+test_ann_dir = "test/msk"
+img_suffix = "_img.tif"
+seg_map_suffix = "_msk.tif"
 
 
 # ignore_index = 2  # ?
@@ -61,7 +61,7 @@ eval_epoch_interval = 2
 
 # TO BE DEFINED BY USER: Save directory
 experiment = ".experiments"
-project_dir = "s1s2-water-finetune"
+project_dir = "s1s2_water_finetune"
 work_dir = os.path.join(project_dir, experiment)
 save_path = work_dir
 
