@@ -19,7 +19,7 @@ num_classes = 2
 num_frames = 1
 img_size = 224
 num_workers = 2  # Worker to pre-fetch data for each single GPU
-samples_per_gpu = 42  # Batch size of a single GPU
+samples_per_gpu = 16  # Batch size of a single GPU
 CLASSES = (0, 1)
 
 img_norm_cfg = dict(
@@ -60,8 +60,8 @@ epochs = 4  # TODO: adapt this
 eval_epoch_interval = 2
 
 # TO BE DEFINED BY USER: Save directory
-experiment = ".experiments"
-project_dir = "s1s2_water_finetune"
+experiment = "s1s2_water_test"
+project_dir = "experiments"
 work_dir = os.path.join(project_dir, experiment)
 save_path = work_dir
 
@@ -81,7 +81,7 @@ train_pipeline = [
     ),
     dict(type="BandsExtract", bands=bands),
     # dict(type="ConstantMultiply", constant=constant),
-    # dict(type="RandomFlip", prob=0.5),  # No data augmentation for now
+    dict(type="RandomFlip", prob=0),  # No data augmentation for now
     dict(type="ToTensor", keys=["img", "gt_semantic_seg"]),
     # to channels first
     dict(type="TorchPermute", keys=["img"], order=(2, 0, 1)),

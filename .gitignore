@@ -4,6 +4,7 @@
 *json*
 *build*
 *.pyc
+__pycache__/
 
 # S1S2-water specific
 s1s2_water/data/*
@@ -12,3 +13,8 @@ s1s2_water/tiles/*
 s1s2_water/split_data/*
 
 experiments/*
+!experiments/.gitkeep
+s1s2_water_finetune/
+Prithvi-100M
+prithvi
+hls-gfm.ipynb
