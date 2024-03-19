@@ -12,7 +12,7 @@ custom_imports = dict(imports=["geospatial_fm"])
 
 ### Configs
 # Data
-data_root = "./s1s2_water/split_data/"
+data_root = "/kaggle/input/s1s2-water-dataset/split_data/"
 
 dataset_type = "GeospatialDataset"
 num_classes = 2
