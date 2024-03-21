@@ -63,7 +63,7 @@ num_heads = 12  # Left to default
 tubelet_size = 1  # Left to default
 
 # TRAINING
-epochs = 4  # TODO: adapt this
+epochs = 20  # TODO: adapt this
 eval_epoch_interval = 2
 
 # TO BE DEFINED BY USER: Save directory
