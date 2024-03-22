@@ -12,7 +12,8 @@ custom_imports = dict(imports=["geospatial_fm"])
 
 ### Configs
 # Data
-data_root = "/kaggle/input/s1s2-water-dataset/split_data/"
+# data_root = "/kaggle/input/s1s2-water-dataset/split_data/"
+data_root = "s1s2_water/split_data"
 
 dataset_type = "GeospatialDataset"
 num_classes = 2
@@ -48,7 +49,7 @@ seg_map_suffix = "_msk.tif"
 # image_nodata_replace = 0
 
 # Model
-pretrained_weights_path = "./prithvi/Prithvi_100M.pt"
+pretrained_weights_path = "./backbones/prithvi_sen1floods11/sen1floods11_Prithvi_100M.pth"
 num_layers = 12  # Left to default
 patch_size = 16  # Left to default
 embed_dim = 768  # Left to default
@@ -223,7 +224,7 @@ workflow = [("train", 1), ("val", 1)]  # Workflow for runner. [('train', 1)] mea
 
 norm_cfg = dict(type="BN", requires_grad=True)  # The configuration of norm layer
 
-# ce_weights = [0.3, 0.7]
+ce_weights = [0.3, 0.7]
 
 model = dict(
     type="TemporalEncoderDecoder",

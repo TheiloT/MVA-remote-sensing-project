@@ -16,5 +16,6 @@ experiments/*
 !experiments/.gitkeep
 s1s2_water_finetune/
 Prithvi-100M
-prithvi
+backbones/*
 hls-gfm.ipynb
+sandbox.ipynb
