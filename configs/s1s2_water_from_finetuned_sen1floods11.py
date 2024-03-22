@@ -217,7 +217,7 @@ checkpoint_config = dict(by_epoch=True, interval=2, out_dir=save_path)  # Config
 
 evaluation = dict(  # The config to build the evaluation hook. Please refer to mmseg/core/evaluation/eval_hook.py for details
     interval=eval_epoch_interval,
-    metric="mIoU",  # TODO: adapt this to add F1 score (to get precision and recall)
+    metric=["mIoU", "mFscore"],  # TODO: adapt this to add F1 score (to get precision and recall)
     pre_eval=True,
     save_best="mIoU",
     by_epoch=True,
@@ -272,7 +272,7 @@ model = dict(
             type="CrossEntropyLoss",
             use_sigmoid=False,
             loss_weight=1,  # Loss weight of decode head (vs auxiliary head)
-            # class_weight=ce_weights,
+            class_weight=ce_weights,
             # avg_non_ignore=True,
         ),
     ),
@@ -292,7 +292,7 @@ model = dict(
             type="CrossEntropyLoss",
             use_sigmoid=False,
             loss_weight=1,
-            # class_weight=ce_weights,
+            class_weight=ce_weights,
             # avg_non_ignore=True,
         ),
     ),
