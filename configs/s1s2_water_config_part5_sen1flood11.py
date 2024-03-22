@@ -55,7 +55,7 @@ seg_map_suffix = "_msk.tif"
 # image_nodata_replace = 0
 
 # Model
-pretrained_weights_path = "./prithvi/sen1floods11_Prithvi_100M.pth"
+pretrained_weights_path = "./backbones/prithvi_sen1floods11/sen1floods11_Prithvi_100M.pth"
 num_layers = 12  # Left to default
 patch_size = 16  # Left to default
 embed_dim = 768  # Left to default
