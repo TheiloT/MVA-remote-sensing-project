@@ -22,10 +22,16 @@ num_workers = 2  # Worker to pre-fetch data for each single GPU
 samples_per_gpu = 16  # Batch size of a single GPU
 CLASSES = (0, 1)
 
-img_norm_cfg = dict(
-    means=[0.14245495, 0.13921481, 0.12434631, 0.31420089, 0.20743526, 0.12046503],
-    stds=[0.04036231, 0.04186983, 0.05267646, 0.0822221, 0.06834774, 0.05294205],
-)  # TODO: adapt to the s1s2-water dataset
+# img_norm_cfg = dict(
+#     means=[0.14245495, 0.13921481, 0.12434631, 0.31420089, 0.20743526, 0.12046503],
+#     stds=[0.04036231, 0.04186983, 0.05267646, 0.0822221, 0.06834774, 0.05294205],
+# )  # TODO: adapt to the s1s2-water part 5 dataset
+
+### Adapted to s1s2-water-part5
+img_norm_cfg=dict(
+    means= [0.1007767,  0.08230785, 0.06713774, 0.16429788, 0.14377461, 0.0850397],
+    stds= [0.00618464, 0.00833475, 0.01420727, 0.02773191, 0.03374934, 0.02931509]
+)
 
 bands = [0, 1, 2, 3, 4, 5]
 tile_size = img_size
@@ -56,7 +62,7 @@ num_heads = 12  # Left to default
 tubelet_size = 1  # Left to default
 
 # TRAINING
-epochs = 4  # TODO: adapt this
+epochs = 4
 eval_epoch_interval = 2
 
 # TO BE DEFINED BY USER: Save directory
