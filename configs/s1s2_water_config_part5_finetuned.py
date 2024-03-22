@@ -220,7 +220,7 @@ checkpoint_config = dict(by_epoch=True, interval=2, out_dir=save_path)  # Config
 
 evaluation = dict(  # The config to build the evaluation hook. Please refer to mmseg/core/evaluation/eval_hook.py for details
     interval=eval_epoch_interval,
-    metric="mIoU",  # TODO: adapt this to add F1 score (to get precision and recall)
+    metric=["mIoU", "mFscore"],  # TODO: adapt this to add F1 score (to get precision and recall)
     pre_eval=True,
     save_best="mIoU",
     by_epoch=True,
