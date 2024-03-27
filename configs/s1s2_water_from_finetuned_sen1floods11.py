@@ -22,11 +22,6 @@ num_workers = 2  # Worker to pre-fetch data for each single GPU
 samples_per_gpu = 16  # Batch size of a single GPU
 CLASSES = (0, 1)
 
-# img_norm_cfg = dict(
-#     means=[0.14245495, 0.13921481, 0.12434631, 0.31420089, 0.20743526, 0.12046503],
-#     stds=[0.04036231, 0.04186983, 0.05267646, 0.0822221, 0.06834774, 0.05294205],
-# )  # TODO: adapt to the s1s2-water part 5 dataset
-
 ### Adapted to s1s2-water-part5
 img_norm_cfg=dict(
     means= [0.1007767,  0.08230785, 0.06713774, 0.16429788, 0.14377461, 0.0850397],
@@ -62,11 +57,11 @@ num_heads = 12  # Left to default
 tubelet_size = 1  # Left to default
 
 # TRAINING
-epochs = 4
+epochs = 2
 eval_epoch_interval = 2
 
 # TO BE DEFINED BY USER: Save directory
-experiment = "s1s2_water_test"
+experiment = "s1s2_water_large_dataset_finetune_sen1floods11_head_sen1floods11"
 project_dir = "experiments"
 work_dir = os.path.join(project_dir, experiment)
 save_path = work_dir
@@ -186,26 +181,26 @@ data = dict(
 )
 
 # Training
-# Unless stated otherwise, here we use the parameters of the S1S2-water article
+# Unless stated otherwise, here we use the parameters of the sen1floods11 article
 optimizer = dict(
     type="AdamW",
-    lr=1e-3,
-    weight_decay=0.01,
-    betas=(0.9, 0.9),
+    lr=1.5e-5,
+    weight_decay=0.05,
+    betas=(0.9, 0.999),
 )
 optimizer_config = dict(grad_clip=None)
 lr_config = dict(
-    policy="step",
-    # warmup="linear",
-    # warmup_iters=1500,
-    # warmup_ratio=1e-6,
-    step=3,  # TODO: Adapt this, as we will probably use only a portion of the dataset
-    gamma=0.1,
-    by_epoch=True,
+    policy="poly",
+    warmup="linear",
+    warmup_iters=500,  # Reduced this number of iterations as we do not do as many epochs as for sen1flodds11
+    warmup_ratio=1e-6,
+    power=1.0,
+    min_lr=0.0,
+    by_epoch=False,
 )
 
 log_config = dict(
-    interval=2,  # TODO: adapt after debug phase is over
+    interval=20,  # TODO: adapt after debug phase is over
     hooks=[
         dict(type="TextLoggerHook", by_epoch=True),
         dict(type="TensorboardLoggerHook", by_epoch=True),
@@ -217,7 +212,7 @@ checkpoint_config = dict(by_epoch=True, interval=2, out_dir=save_path)  # Config
 
 evaluation = dict(  # The config to build the evaluation hook. Please refer to mmseg/core/evaluation/eval_hook.py for details
     interval=eval_epoch_interval,
-    metric=["mIoU", "mFscore"],  # TODO: adapt this to add F1 score (to get precision and recall)
+    metric=["mIoU", "mFscore"],
     pre_eval=True,
     save_best="mIoU",
     by_epoch=True,
@@ -225,7 +220,7 @@ evaluation = dict(  # The config to build the evaluation hook. Please refer to m
 
 runner = dict(type="EpochBasedRunner", max_epochs=epochs)
 
-workflow = [("train", 1), ("val", 1)]  # Workflow for runner. [('train', 1)] means there is only one workflow and the workflow named 'train' is executed once. The workflow trains the model by 40000 iterations according to the `runner.max_iters`
+workflow = [("train", 1), ("val", 1)]  # Workflow for runner. [('train', 1)] means there is only one workflow and the workflow named 'train' is executed once.
 
 norm_cfg = dict(type="BN", requires_grad=True)  # The configuration of norm layer
 
@@ -240,7 +235,7 @@ model = dict(
         img_size=img_size,
         patch_size=patch_size,
         num_frames=num_frames,
-        tubelet_size=1,  # 
+        tubelet_size=1,
         in_chans=len(bands),
         embed_dim=embed_dim,
         depth=num_layers,
