@@ -63,8 +63,8 @@ num_heads = 12  # Left to default
 tubelet_size = 1  # Left to default
 
 # TRAINING
-epochs = 4  # TODO: adapt this
-eval_epoch_interval = 2
+epochs = 40  # TODO: adapt this
+eval_epoch_interval = 5
 
 # TO BE DEFINED BY USER: Save directory
 experiment = "s1s2_water_test"
