@@ -15,6 +15,9 @@ custom_imports = dict(imports=["geospatial_fm"])
 #data_root = "/kaggle/input/s1s2-water-dataset/split_data/"
 data_root="/kaggle/input/s1s2-water-part5-only/split_data/"
 
+## Launching test on large dataset
+test_data_root="/kaggle/input/s1s2-water-dataset/split_data/"
+
 dataset_type = "GeospatialDataset"
 num_classes = 2
 num_frames = 1
@@ -177,7 +180,7 @@ data = dict(
     test=dict(
         type=dataset_type,
         CLASSES=CLASSES,
-        data_root=data_root,
+        data_root=test_data_root,
         img_dir=test_img_dir,
         ann_dir=test_ann_dir,
         img_suffix=img_suffix,
@@ -232,7 +235,7 @@ workflow = [("train", 1), ("val", 1)]  # Workflow for runner. [('train', 1)] mea
 
 norm_cfg = dict(type="BN", requires_grad=True)  # The configuration of norm layer
 
-# ce_weights = [0.3, 0.7]
+ce_weights = [0.3, 0.7]
 
 model = dict(
     type="TemporalEncoderDecoder",
@@ -295,7 +298,7 @@ model = dict(
             type="CrossEntropyLoss",
             use_sigmoid=False,
             loss_weight=1,
-            # class_weight=ce_weights,
+            class_weight=ce_weights,
             # avg_non_ignore=True,
         ),
     ),
