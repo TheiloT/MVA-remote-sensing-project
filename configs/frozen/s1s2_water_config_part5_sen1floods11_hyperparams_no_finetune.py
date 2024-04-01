@@ -1,4 +1,3 @@
-
 ### Using SEN1FLOODS11 hyperparameters
 import os
 
@@ -14,6 +13,7 @@ custom_imports = dict(imports=["geospatial_fm"])
 
 ### Configs
 # Data
+#data_root = "/kaggle/input/s1s2-water-dataset/split_data/"
 data_root="/kaggle/input/s1s2-water-part5-only/split_data/"
 
 ## Launching test on large dataset
@@ -26,6 +26,11 @@ img_size = 224
 num_workers = 2  # Worker to pre-fetch data for each single GPU
 samples_per_gpu = 16  # Batch size of a single GPU
 CLASSES = (0, 1)
+
+# img_norm_cfg = dict(
+#     means=[0.14245495, 0.13921481, 0.12434631, 0.31420089, 0.20743526, 0.12046503],
+#     stds=[0.04036231, 0.04186983, 0.05267646, 0.0822221, 0.06834774, 0.05294205],
+# )  # TODO: adapt to the s1s2-water part 5 dataset
 
 ### Adapted to s1s2-water-part5
 img_norm_cfg=dict(
@@ -54,9 +59,7 @@ seg_map_suffix = "_msk.tif"
 # image_nodata_replace = 0
 
 # Model
-## Using the weights on the model finetuned on sen1floods11
-
-pretrained_weights_path = "./backbones/prithvi_sen1floods11/sen1floods11_Prithvi_100M.pth"
+pretrained_weights_path = "./backbones/prithvi/Prithvi_100M.pt"
 num_layers = 12  # Left to default
 patch_size = 16  # Left to default
 embed_dim = 768  # Left to default
@@ -219,7 +222,7 @@ checkpoint_config = dict(by_epoch=True, interval=2, out_dir=save_path)  # Config
 
 evaluation = dict(  # The config to build the evaluation hook. Please refer to mmseg/core/evaluation/eval_hook.py for details
     interval=eval_epoch_interval,
-    metric=["mIoU", "mFscore"],
+    metric=["mIoU", "mFscore"],  # TODO: adapt this to add F1 score (to get precision and recall)
     pre_eval=True,
     save_best="mIoU",
     by_epoch=True,
@@ -235,7 +238,7 @@ ce_weights = [0.3, 0.7]
 
 model = dict(
     type="TemporalEncoderDecoder",
-    frozen_backbone=False,  # Freeze for first experiments
+    frozen_backbone=True,  # Freeze for first experiments
     backbone=dict(
         type="TemporalViTEncoder",
         pretrained=pretrained_weights_path,

@@ -61,7 +61,7 @@ epochs = 4
 eval_epoch_interval = 2
 
 # TO BE DEFINED BY USER: Save directory
-experiment = "s1s2_water_large_dataset_pretrained_head_sen1floods11"
+experiment = "s1s2_water_large_dataset_pretrained_head_sen1floods11_nofreeze"
 project_dir = "experiments"
 work_dir = os.path.join(project_dir, experiment)
 save_path = work_dir
@@ -200,14 +200,13 @@ lr_config = dict(
 )
 
 log_config = dict(
-    interval=20,  # TODO: adapt after debug phase is over
+    interval=20,
     hooks=[
         dict(type="TextLoggerHook", by_epoch=True),
         dict(type="TensorboardLoggerHook", by_epoch=True),
     ],
 )
 
-# TODO: adapt after debug phase is over
 checkpoint_config = dict(by_epoch=True, interval=2, out_dir=save_path)  # Config to set the checkpoint hook, Refer to https://github.com/open-mmlab/mmcv/blob/master/mmcv/runner/hooks/checkpoint.py for implementation.
 
 evaluation = dict(  # The config to build the evaluation hook. Please refer to mmseg/core/evaluation/eval_hook.py for details
@@ -228,7 +227,7 @@ ce_weights = [0.3, 0.7]
 
 model = dict(
     type="TemporalEncoderDecoder",
-    frozen_backbone=True,  # Freeze for first experiments
+    frozen_backbone=False,
     backbone=dict(
         type="TemporalViTEncoder",
         pretrained=pretrained_weights_path,

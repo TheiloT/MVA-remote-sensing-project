@@ -1,5 +1,3 @@
-
-### Using SEN1FLOODS11 hyperparameters
 import os
 
 # base options
@@ -14,10 +12,7 @@ custom_imports = dict(imports=["geospatial_fm"])
 
 ### Configs
 # Data
-data_root="/kaggle/input/s1s2-water-part5-only/split_data/"
-
-## Launching test on large dataset
-test_data_root="/kaggle/input/s1s2-water-dataset/split_data/"
+data_root = "/kaggle/input/s1s2-water-dataset/split_data/"
 
 dataset_type = "GeospatialDataset"
 num_classes = 2
@@ -54,8 +49,6 @@ seg_map_suffix = "_msk.tif"
 # image_nodata_replace = 0
 
 # Model
-## Using the weights on the model finetuned on sen1floods11
-
 pretrained_weights_path = "./backbones/prithvi_sen1floods11/sen1floods11_Prithvi_100M.pth"
 num_layers = 12  # Left to default
 patch_size = 16  # Left to default
@@ -64,11 +57,11 @@ num_heads = 12  # Left to default
 tubelet_size = 1  # Left to default
 
 # TRAINING
-epochs = 25  # TODO: adapt this
-eval_epoch_interval = 5
+epochs = 4
+eval_epoch_interval = 2
 
 # TO BE DEFINED BY USER: Save directory
-experiment = "s1s2_water_test_part_5_sen1floods11_hp"
+experiment = "s1s2_water_large_dataset_finetune_sen1floods11_head_sen1floods11"
 project_dir = "experiments"
 work_dir = os.path.join(project_dir, experiment)
 save_path = work_dir
@@ -176,7 +169,7 @@ data = dict(
     test=dict(
         type=dataset_type,
         CLASSES=CLASSES,
-        data_root=test_data_root,
+        data_root=data_root,
         img_dir=test_img_dir,
         ann_dir=test_ann_dir,
         img_suffix=img_suffix,
@@ -199,15 +192,15 @@ optimizer_config = dict(grad_clip=None)
 lr_config = dict(
     policy="poly",
     warmup="linear",
-    warmup_iters=500,
+    warmup_iters=500,  # Reduced this number of iterations as we do not do as many epochs as for sen1flodds11
     warmup_ratio=1e-6,
-    power=1.0, 
+    power=1.0,
     min_lr=0.0,
     by_epoch=False,
 )
 
 log_config = dict(
-    interval=2,  # TODO: adapt after debug phase is over
+    interval=20,  # TODO: adapt after debug phase is over
     hooks=[
         dict(type="TextLoggerHook", by_epoch=True),
         dict(type="TensorboardLoggerHook", by_epoch=True),
@@ -227,7 +220,7 @@ evaluation = dict(  # The config to build the evaluation hook. Please refer to m
 
 runner = dict(type="EpochBasedRunner", max_epochs=epochs)
 
-workflow = [("train", 1), ("val", 1)]  # Workflow for runner. [('train', 1)] means there is only one workflow and the workflow named 'train' is executed once. The workflow trains the model by 40000 iterations according to the `runner.max_iters`
+workflow = [("train", 1), ("val", 1)]  # Workflow for runner. [('train', 1)] means there is only one workflow and the workflow named 'train' is executed once.
 
 norm_cfg = dict(type="BN", requires_grad=True)  # The configuration of norm layer
 
@@ -235,14 +228,14 @@ ce_weights = [0.3, 0.7]
 
 model = dict(
     type="TemporalEncoderDecoder",
-    frozen_backbone=False,  # Freeze for first experiments
+    frozen_backbone=True,  # Freeze for first experiments
     backbone=dict(
         type="TemporalViTEncoder",
         pretrained=pretrained_weights_path,
         img_size=img_size,
         patch_size=patch_size,
         num_frames=num_frames,
-        tubelet_size=1,  # 
+        tubelet_size=1,
         in_chans=len(bands),
         embed_dim=embed_dim,
         depth=num_layers,
@@ -274,7 +267,7 @@ model = dict(
             type="CrossEntropyLoss",
             use_sigmoid=False,
             loss_weight=1,  # Loss weight of decode head (vs auxiliary head)
-            # class_weight=ce_weights,
+            class_weight=ce_weights,
             # avg_non_ignore=True,
         ),
     ),

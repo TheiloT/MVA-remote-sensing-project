@@ -61,7 +61,7 @@ epochs = 4
 eval_epoch_interval = 2
 
 # TO BE DEFINED BY USER: Save directory
-experiment = "s1s2_water_large_dataset_finetune_sen1floods11_head_sen1floods11"
+experiment = "s1s2_water_large_dataset_finetune_sen1floods11_head_sen1floods11_nofreeze"
 project_dir = "experiments"
 work_dir = os.path.join(project_dir, experiment)
 save_path = work_dir
@@ -200,7 +200,7 @@ lr_config = dict(
 )
 
 log_config = dict(
-    interval=20,  # TODO: adapt after debug phase is over
+    interval=20,
     hooks=[
         dict(type="TextLoggerHook", by_epoch=True),
         dict(type="TensorboardLoggerHook", by_epoch=True),
@@ -228,7 +228,7 @@ ce_weights = [0.3, 0.7]
 
 model = dict(
     type="TemporalEncoderDecoder",
-    frozen_backbone=True,  # Freeze for first experiments
+    frozen_backbone=False,  # Freeze for first experiments
     backbone=dict(
         type="TemporalViTEncoder",
         pretrained=pretrained_weights_path,
