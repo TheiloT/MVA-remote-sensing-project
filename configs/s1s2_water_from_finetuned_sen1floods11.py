@@ -19,7 +19,7 @@ num_classes = 2
 num_frames = 1
 img_size = 224
 num_workers = 2  # Worker to pre-fetch data for each single GPU
-samples_per_gpu = 16  # Batch size of a single GPU
+samples_per_gpu = 14  # Batch size of a single GPU
 CLASSES = (0, 1)
 
 ### Computed on training and validation sets of parts 1, 2 and 5 of the dataset
@@ -57,7 +57,7 @@ num_heads = 12  # Left to default
 tubelet_size = 1  # Left to default
 
 # TRAINING
-epochs = 4
+epochs = 2
 eval_epoch_interval = 2
 
 # TO BE DEFINED BY USER: Save directory
