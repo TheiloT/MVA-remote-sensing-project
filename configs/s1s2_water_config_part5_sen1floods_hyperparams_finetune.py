@@ -221,7 +221,8 @@ log_config = dict(
 )
 
 # TODO: adapt after debug phase is over
-checkpoint_config = dict(by_epoch=True, interval=2, out_dir=save_path)  # Config to set the checkpoint hook, Refer to https://github.com/open-mmlab/mmcv/blob/master/mmcv/runner/hooks/checkpoint.py for implementation.
+checkpoint_config = dict(by_epoch=True, interval=5, out_dir=save_path)  # Config to set the checkpoint hook, Refer to https://github.com/open-mmlab/mmcv/blob/master/mmcv/runner/hooks/checkpoint.py for implementation.
+## Saving after each validation step
 
 evaluation = dict(  # The config to build the evaluation hook. Please refer to mmseg/core/evaluation/eval_hook.py for details
     interval=eval_epoch_interval,
