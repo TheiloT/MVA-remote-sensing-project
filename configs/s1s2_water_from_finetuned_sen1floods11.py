@@ -22,10 +22,10 @@ num_workers = 2  # Worker to pre-fetch data for each single GPU
 samples_per_gpu = 16  # Batch size of a single GPU
 CLASSES = (0, 1)
 
-### Adapted to s1s2-water-part5
+### Computed on training and validation sets of parts 1, 2 and 5 of the dataset
 img_norm_cfg=dict(
-    means= [0.1007767,  0.08230785, 0.06713774, 0.16429788, 0.14377461, 0.0850397],
-    stds= [0.00618464, 0.00833475, 0.01420727, 0.02773191, 0.03374934, 0.02931509]
+    means= [0.10735853, 0.09544952, 0.08811411, 0.19080341, 0.18524158, 0.11630596],
+    stds= [0.02595188, 0.02899879, 0.04512926, 0.08647086, 0.09900333, 0.07598658]
 )
 
 bands = [0, 1, 2, 3, 4, 5]
@@ -207,7 +207,6 @@ log_config = dict(
     ],
 )
 
-# TODO: adapt after debug phase is over
 checkpoint_config = dict(by_epoch=True, interval=2, out_dir=save_path)  # Config to set the checkpoint hook, Refer to https://github.com/open-mmlab/mmcv/blob/master/mmcv/runner/hooks/checkpoint.py for implementation.
 
 evaluation = dict(  # The config to build the evaluation hook. Please refer to mmseg/core/evaluation/eval_hook.py for details
