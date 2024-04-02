@@ -19,7 +19,7 @@ num_classes = 2
 num_frames = 1
 img_size = 224
 num_workers = 2  # Worker to pre-fetch data for each single GPU
-samples_per_gpu = 14  # Batch size of a single GPU
+samples_per_gpu = 12  # Batch size of a single GPU
 CLASSES = (0, 1)
 
 ### Computed on training and validation sets of parts 1, 2 and 5 of the dataset
