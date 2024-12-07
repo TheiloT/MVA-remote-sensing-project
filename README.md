@@ -1,3 +1,12 @@
+# MVA project - Remote sensing data: from sensor to large-scale geospatial data exploitation - Foundation models of remote sensing data for river detection
+
+This repository contains the code for the project "Foundation models of remote sensing data for river detection" of the course "Remote sensing data: from sensor to large-scale geospatial data exploitation" of the 2023-2024 MVA Master. It is a fork of a tutorial on finetuning NASA's Prithvi model, which it adapts for application on the [S1S2-Water dataset](https://zenodo.org/records/11278238).
+
+**MVA students:** Inès LARROCHE, Theïlo TERRISSE
+
+The rest of this README is from the original repository.
+
+---
 # Image segmentation by foundation model finetuning
 
 This repository shows three examples of how [Prithvi](https://huggingface.co/ibm-nasa-geospatial/Prithvi-100M) can be finetuned for downstream tasks. The examples include flood detection using Sentinel-2 data from the [Sen1Floods11](https://github.com/cloudtostreet/Sen1Floods11) dataset, burn scars detection using the [NASA HLS fire scars dataset](https://huggingface.co/datasets/nasa-impact/hls_burn_scars) and multi-temporal crop classification using the [NASA HLS multi-temporal crop classification dataset](https://huggingface.co/datasets/ibm-nasa-geospatial/multi-temporal-crop-classification).
